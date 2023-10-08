@@ -25,8 +25,9 @@ import com.tyupik.teating.ui.eating_list.model.Side
 fun BreastDialog(
     onButtonClick: (Side) -> Unit,
     onDismiss: () -> Unit,
+    onDismissWithoutScroll: () -> Unit,
 ) {
-    Dialog(onDismissRequest = { onDismiss() }) {
+    Dialog(onDismissRequest = { onDismissWithoutScroll() }) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -53,13 +54,17 @@ fun BreastDialog(
                     TextButton(
                         onClick = {
                             onButtonClick(Side.LEFT)
+                            onDismiss()
                         },
                         modifier = Modifier.padding(8.dp),
                     ) {
                         Text(stringResource(R.string.left))
                     }
                     TextButton(
-                        onClick = { onButtonClick(Side.RIGHT) },
+                        onClick = {
+                            onButtonClick(Side.RIGHT)
+                            onDismiss()
+                        },
                         modifier = Modifier.padding(8.dp),
                     ) {
                         Text(stringResource(R.string.right))
