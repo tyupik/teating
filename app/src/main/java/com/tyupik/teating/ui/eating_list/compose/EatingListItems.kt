@@ -1,6 +1,7 @@
 package com.tyupik.teating.ui.eating_list.compose
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -24,13 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tyupik.teating.R
 import com.tyupik.teating.ui.eating_list.model.EatingItem
 import com.tyupik.teating.ui.theme.BackgroundCard
+import com.tyupik.teating.ui.theme.TeatingTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -61,16 +66,32 @@ fun EatingListItems(
                             Text(
                                 text = item.dateAndTime,
                                 modifier = Modifier
-                                    .weight(3f)
+                                    .weight(6f)
                                     .padding(top = 12.dp, start = 16.dp)
                             )
                             Text(
                                 text = item.side,
                                 modifier = Modifier
-                                    .weight(1.5f)
-                                    .padding(top = 12.dp),
+                                    .weight(3f)
+                                    .padding(top = 12.dp, start = 6.dp),
                             )
+
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .weight(1.5f),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                if (item.blobExist) {
+                                    Image(
+                                        modifier = Modifier.padding(top = 6.dp),
+                                        painter = painterResource(id = R.drawable.blob),
+                                        contentDescription = stringResource(R.string.blob)
+                                    )
+                                }
+                            }
                             IconButton(
+                                modifier = Modifier.weight(0.7f),
                                 onClick = { onRemoveClick(item.id) }
                             ) {
                                 Icon(
@@ -99,6 +120,31 @@ fun EatingListItems(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun Preview() {
+    TeatingTheme {
+        EatingListItems(
+            uiData = listOf(
+                EatingItem(
+                    id = "123",
+                    dateAndTime = "20:40 10/10/2023",
+                    side = "Правая",
+                    blobExist = false
+                ),
+                EatingItem(
+                    id = "6798",
+                    dateAndTime = "20:40 10/10/2023",
+                    side = "Левая",
+                    blobExist = true
+                ),
+            ),
+            listState = rememberLazyListState(),
+            onRemoveClick = {}
+        )
     }
 }
 

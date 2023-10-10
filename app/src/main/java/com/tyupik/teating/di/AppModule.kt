@@ -29,7 +29,6 @@ object AppModule {
         EatingRoomDatabase::class.java,
         "eating_database"
     )
-        .fallbackToDestructiveMigration()
         .build()
 
     @Singleton

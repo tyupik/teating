@@ -9,24 +9,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.tyupik.teating.R
 import com.tyupik.teating.ui.eating_list.model.Side
 
 @Composable
 fun BreastDialog(
-    onButtonClick: (Side) -> Unit,
+    onButtonClick: (Side, Boolean) -> Unit,
     onDismiss: () -> Unit,
     onDismissWithoutScroll: () -> Unit,
 ) {
+    val checkedState = remember { mutableStateOf(false) }
+
     Dialog(onDismissRequest = { onDismissWithoutScroll() }) {
         Card(
             modifier = Modifier
@@ -43,29 +49,41 @@ fun BreastDialog(
             ) {
                 Text(
                     text = stringResource(R.string.select_breast),
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp, bottom = 12.dp),
                     textAlign = TextAlign.Center,
                 )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = checkedState.value,
+                        onCheckedChange = { checkedState.value = it },
+                    )
+                    Text(
+                        text = stringResource(R.string.blob),
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     TextButton(
                         onClick = {
-                            onButtonClick(Side.LEFT)
+                            onButtonClick(Side.LEFT, checkedState.value)
                             onDismiss()
                         },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp),
                     ) {
                         Text(stringResource(R.string.left))
                     }
                     TextButton(
                         onClick = {
-                            onButtonClick(Side.RIGHT)
+                            onButtonClick(Side.RIGHT, checkedState.value)
                             onDismiss()
                         },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp),
                     ) {
                         Text(stringResource(R.string.right))
                     }

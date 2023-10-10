@@ -25,18 +25,20 @@ class EatingListInteractor @Inject constructor(
                         Side.LEFT -> R.string.left
                         Side.RIGHT -> R.string.right
                     }
-                )
+                ),
+                blobExist = it.blobExist
             )
         }
             .reversed()
     }
 
-    suspend fun postEating(side: Side) {
+    suspend fun postEating(side: Side, isBlob: Boolean) {
         repository.postEating(
             EatingEntity(
                 id = UUID.randomUUID().toString(),
                 dateMillis = Date().time,
-                side = side
+                side = side,
+                blobExist = isBlob,
             )
         )
     }

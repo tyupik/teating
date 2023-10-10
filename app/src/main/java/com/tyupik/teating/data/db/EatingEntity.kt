@@ -1,5 +1,6 @@
 package com.tyupik.teating.data.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tyupik.teating.ui.eating_list.model.Side
@@ -10,4 +11,6 @@ data class EatingEntity(
     val id: String,
     val dateMillis: Long,
     val side: Side,
+    @ColumnInfo(defaultValue = "false")
+    val blobExist: Boolean,
 )

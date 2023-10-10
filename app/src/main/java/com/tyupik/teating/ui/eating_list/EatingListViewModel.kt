@@ -36,9 +36,9 @@ class EatingListViewModel @Inject constructor(
         }
     }
 
-    fun onBreastDialogSelected(side: Side) {
+    fun onBreastDialogSelected(side: Side, isBlob: Boolean) {
         viewModelScope.launch {
-            interactor.postEating(side)
+            interactor.postEating(side, isBlob)
             loadData()
         }
     }
