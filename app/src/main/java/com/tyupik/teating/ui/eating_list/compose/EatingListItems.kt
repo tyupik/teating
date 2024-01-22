@@ -20,6 +20,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +43,19 @@ fun EatingListItems(
     listState: LazyListState,
     onRemoveClick: (String) -> Unit = {},
 ) {
+    var openDialog by remember { mutableStateOf(false) }
+    var itemId by remember { mutableStateOf("") }
+
+    if (openDialog) {
+        RemoveItemDialog(
+            onYesClick = {
+                onRemoveClick(itemId)
+                openDialog = false
+            },
+            onNoClick = { openDialog = false }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +88,10 @@ fun EatingListItems(
                                     .padding(top = 12.dp),
                             )
                             IconButton(
-                                onClick = { onRemoveClick(item.id) }
+                                onClick = {
+                                    itemId = item.id
+                                    openDialog = true
+                                }
                             ) {
                                 Icon(
                                     Icons.Filled.Clear,
@@ -101,6 +121,3 @@ fun EatingListItems(
         }
     }
 }
-
-
-    

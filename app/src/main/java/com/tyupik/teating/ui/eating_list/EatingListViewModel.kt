@@ -3,6 +3,8 @@ package com.tyupik.teating.ui.eating_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tyupik.teating.business.EatingListInteractor
+import com.tyupik.teating.business.app_metric.Events
+import com.tyupik.teating.business.app_metric.IAppMetricInteractor
 import com.tyupik.teating.ui.eating_list.compose.EatingListState
 import com.tyupik.teating.ui.eating_list.compose.EatingListState.DataShowState
 import com.tyupik.teating.ui.eating_list.compose.EatingListState.LoadingState
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EatingListViewModel @Inject constructor(
     private val interactor: EatingListInteractor,
+    private val appMetricInteractor: IAppMetricInteractor,
 ) : ViewModel() {
 
     private val _composeState: MutableStateFlow<EatingListState> = MutableStateFlow(LoadingState)
@@ -33,6 +36,7 @@ class EatingListViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.removeItem(id)
             loadData()
+            appMetricInteractor.sendSimpleEvent(Events.REMOVE_ITEM_EVENT)
         }
     }
 
@@ -40,6 +44,7 @@ class EatingListViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.postEating(side)
             loadData()
+            appMetricInteractor.sendSimpleEvent(Events.BREAST_SELECTED_EVENT)
         }
     }
 
