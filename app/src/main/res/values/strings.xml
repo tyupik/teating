@@ -2,8 +2,11 @@
     <string name="app_name">Teating</string>
     <string name="add">Добавить</string>
     <string name="remove">Удалить</string>
+    <string name="remove_item_question">Удалить запись?</string>
     <string name="select_breast">Выберите грудь, которой будете сейчас кормить</string>
     <string name="left">Левая</string>
     <string name="right">Правая</string>
     <string name="click_plus">Нажмите «+», чтобы выбрать грудь для кормления</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

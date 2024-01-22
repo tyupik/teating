@@ -3,6 +3,8 @@ package com.tyupik.teating.di
 import android.content.Context
 import android.content.res.Resources
 import androidx.room.Room
+import com.tyupik.teating.business.app_metric.AppMetricInteractor
+import com.tyupik.teating.business.app_metric.IAppMetricInteractor
 import com.tyupik.teating.data.db.EatingRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -35,5 +37,9 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDao(db: EatingRoomDatabase) = db.eatingDao()
+
+    @Singleton
+    @Provides
+    fun provideAppMetrics(): IAppMetricInteractor = AppMetricInteractor()
 
 }
